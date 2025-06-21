@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explora la IA con Instalaciones Interactivas</title>
+    <!-- Enlace al archivo CSS global -->
+    <link rel="stylesheet" href="../ml-osc-web/styles.css">
+</head>
+<body>
+    <!-- Barra de navegación global -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo del sitio -->
+            <div class="logo">
+                <img src="/ml-osc-web/assets/Logo LED.jpeg" alt="Logo LED" class="logo-image">
+                <h1 class="site-title">IA + Instalaciones Interactivas</h1>
+            </div>
+            <!-- Menú hamburguesa -->
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        
+        <!-- Separador dinámico -->
+        <div class="nav-spacer"></div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="/ml-osc-web/index.html">Inicio</a></li>
+            <li><a href="/ml-osc-web/imagen/">Imágenes</a></li>
+            <li><a href="/ml-osc-web/pose/">Posturas</a></li>
+            <li><a href="/ml-osc-web/sonido/">Sonidos</a></li>
+            <li><a href="/ml-osc-web/imagenQLab/">Imágenes + QLab</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Explora la IA con Instalaciones Interactivas</h1>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>Estas interfaces con modelos de Inteligencia Artificial pre-entrenados te permitirán explorar cómo podrían enviarse señales OSC a partir de estímulos del mundo físico.</p>
+            <p>Las señales OSC son utilizadas para orquestar acciones y eventos con otros Softwares especializados en Arte+Tecnología.</p>
+            <p>Para empezar, selecciona alguno de los modelos de red neuronal disponibles:</p>
+        </section>
+    
+        <!-- Sección visual con botones -->
+        <section class="model-section">
+            <div class="model-card">
+                <img src="assets/image-icon.png" alt="Modelo de Imágenes">
+                <h2>Modelo de Imágenes</h2>
+                <p>Explora cómo la IA interpreta imágenes y genera señales OSC.</p>
+                <button class="model-button" onclick="openPage('/ml-osc-web/imagen/')">Ir al modelo</button>
+            </div>
+            <div class="model-card">
+                <img src="assets/pose-icon.png" alt="Modelo de Posturas">
+                <h2>Modelo de Posturas</h2>
+                <p>Descubre cómo la IA analiza posturas humanas en tiempo real.</p>
+                <button class="model-button" onclick="openPage('/ml-osc-web/pose/')">Ir al modelo</button>
+            </div>
+            <div class="model-card">
+                <img src="assets/sound-icon.png" alt="Modelo de Sonidos">
+                <h2>Modelo de Sonidos</h2>
+                <p>Experimenta cómo la IA interpreta sonidos y los convierte en señales OSC.</p>
+                <button class="model-button" onclick="openPage('/ml-osc-web/sonido/')">Ir al modelo</button>
+            </div>
+        </section>
+
+
+        <section class="intro-section">
+            <p>Estas interfaces han sido refinadas para trabajar con productos de software específicos.</p>
+            <p>Puedes usarlos para tu proyecto concreto de instalaciones interactivas</p>
+        </section>
+    
+        <!-- Sección visual con botones -->
+        <section class="model-section">
+            <div class="model-card">
+                <img src="assets/qlab-logo.png" alt="Imágenes + QLab">
+                <h2>Imágenes + QLab</h2>
+                <p>Explora cómo la IA interpreta imágenes y genera señales OSC (personalizado para QLab).</p>
+                <button class="model-button" onclick="openPage('/ml-osc-web/imagenQLab/')">Ir al modelo</button>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>&copy; LED - UNA 2025 | Creado por Julio Quimbayo Bolaños, M.A.</p>
+        <p>
+            <a href="https://github.com" target="_blank">GitHub</a> |
+            <a href="mailto:led@una.cr">Contacto</a> |
+            <a href="../ml-osc-web/creditos/">Créditos</a>
+        </p>
+    </footer>
+
+    <script>
+        // Función para abrir una nueva pestaña con la página correspondiente
+        function openPage(url) {
+            window.open(url, '_blank');
+        }
+
+        // Función para alternar el menú desplegable
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Imágenes - Teachable Machine</title>
+    <!-- Enlace al archivo CSS global -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Librerías necesarias -->
+    <script src="http://127.0.0.1:8081/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.5.0/dist/ml5.min.js"></script>
+    <script src="../js/libraries/osc.util.js"></script>
+</head>
+
+<body>
+    <!-- Barra de navegación global -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo del sitio -->
+            <div class="logo">
+                <img src="/ml-osc-web/assets/Logo LED.jpeg" alt="Logo LED" class="logo-image">
+                <h1 class="site-title">IA + Instalaciones Interactivas</h1>
+            </div>
+            <!-- Menú hamburguesa -->
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        
+        <!-- Separador dinámico -->
+        <div class="nav-spacer"></div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="/ml-osc-web/index.html">Inicio</a></li>
+            <li><a href="/ml-osc-web/imagen/">Imágenes</a></li>
+            <li><a href="/ml-osc-web/pose/">Posturas</a></li>
+            <li><a href="/ml-osc-web/sonido/">Sonidos</a></li>
+            <li><a href="/ml-osc-web/imagenQLab/">Imágenes + QLab</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Modelo de Imágenes - Teachable Machine</h1>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>Demostración creada en el LED para una red neuronal de identificación de imágenes usando el modelo de Google "Teachable Machine".</p>
+        </section>
+
+        <!-- Contenedor para el sketch -->
+        <section id="sketch-container">
+            <script src="../js/models/sketchImage.js"></script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; LED - UNA 2025 | Creado por Julio Quimbayo Bolaños, M.A.</p>
+        <p>
+            <a href="https://github.com" target="_blank">GitHub</a> |
+            <a href="../contacto.html">Contacto</a> |
+            <a href="../creditos/">Créditos</a>
+        </p>
+    </footer>
+
+	<script>
+        // Función para alternar el menú desplegable
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

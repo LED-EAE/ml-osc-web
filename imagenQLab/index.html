@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Imágenes - Teachable Machine</title>
+    <!-- Enlace al archivo CSS global -->
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Librerías necesarias -->
+    <script src="http://127.0.0.1:8081/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.5.0/dist/ml5.min.js"></script>
+    <script src="../js/libraries/osc.util.js"></script>
+</head>
+
+<body>
+    <!-- Barra de navegación global -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo del sitio -->
+            <div class="logo">
+                <img src="/ml-osc-web/assets/Logo LED.jpeg" alt="Logo LED" class="logo-image">
+                <h1 class="site-title">IA + Instalaciones Interactivas</h1>
+            </div>
+            <!-- Menú hamburguesa -->
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        
+        <!-- Separador dinámico -->
+        <div class="nav-spacer"></div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="/ml-osc-web/index.html">Inicio</a></li>
+            <li><a href="/ml-osc-web/imagen/">Imágenes</a></li>
+            <li><a href="/ml-osc-web/pose/">Posturas</a></li>
+            <li><a href="/ml-osc-web/sonido/">Sonidos</a></li>
+            <li><a href="/ml-osc-web/imagenQLab/">Imágenes + QLab</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Modelo de Imágenes - Teachable Machine</h1>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>Demostración creada en el LED para una red neuronal de identificación de imágenes usando el modelo de Google "Teachable Machine".</p>
+        </section>
+
+        <!-- Sección para definir la Dirección IP, Puerto y Modelo de Reconocimiento -->
+        <section id="osc-settings">
+            <h3>
+                Configuración OSC y Modelo de Reconocimiento
+                <button class="osc-config-toggle-button toggle-button" onclick="toggleOscSettings()">▼</button>
+            </h3>
+            <div id="osc-content" style="display: none;">
+                <div id="osc-container">
+                    <div class="osc-field-container">
+                        <label for="ip-input">Dirección IP:</label>
+                        <input type="text" id="ip-input" class="osc-input" value="127.0.0.1">
+                    </div>
+                    <div class="osc-field-container">
+                        <label for="port-input">Puerto:</label>
+                        <input type="number" id="port-input" class="osc-input" value="3333">
+                    </div>
+                    <div class="osc-field-container">
+                        <label for="model-url-input">Modelo de Reconocimiento:</label>
+                        <input type="text" id="model-url-input" class="osc-input" value="https://teachablemachine.withgoogle.com/models/JFrhRDPNV/">
+                    </div>
+                    <div class="osc-field-container">
+                        <label for="confidence-threshold-input">Precisión:</label>
+                        <input type="number" id="confidence-threshold-input" class="osc-input" step="0.01" min="0" max="1" value="0.96">
+                    </div>
+                    <div class="osc-button-container">
+                        <button class="osc-button" onclick="saveOscSettings()">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección para editar el diccionario resultDict -->
+        <section id="dictionary-editor" style="margin: 20px auto; text-align: center;">
+            <h3>
+                Editor de Diccionario
+                <button class="dictionary-config-toggle-button" onclick="toggleDictionaryEditor()">▼</button>
+            </h3>
+            <div id="dictionary-content" style="display: none;">
+                <div id="dictionary-container"></div>
+                <button class="osc-button" onclick="addDictionaryEntry()">Agregar Nuevo Par</button>
+                <button class="osc-button" onclick="triggerFileInput()">Cargar Diccionario</button>
+                <input type="file" id="dictionary-file" accept=".txt" style="display: none;" onchange="loadDictionaryFromFile(event)">
+                <button class="osc-button" onclick="exportDictionary()">Exportar Diccionario</button>
+            </div>
+        </section>
+
+        <!-- Contenedor para el sketch -->
+        <section id="sketch-container">
+            <div id="toggle-container">
+                <label for="repeat-recognition-toggle">Repetir reconocimiento de objetos:</label>
+                <input type="checkbox" id="repeat-recognition-toggle" onchange="toggleRepeatRecognition()">
+            </div>
+            <script src="../js/models/sketchImageQLab.js"></script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; LED - UNA 2025 | Creado por Julio Quimbayo Bolaños, M.A.</p>
+        <p>
+            <a href="https://github.com" target="_blank">GitHub</a> |
+            <a href="../contacto.html">Contacto</a> |
+            <a href="../creditos/">Créditos</a>
+        </p>
+    </footer>
+
+	<script>
+        // Función para alternar el menú desplegable
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
