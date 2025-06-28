@@ -13,6 +13,9 @@ let resultDict = {
 	"Saco": "3",
 };
 
+// Variable to control if it is possible to send the same Classification result via OSC
+let repeatRecognition = false;
+
 // OSC Client IP and Listening Port (manual entry, expected value: QLab Network OSC settings)
 // Listeing Port set as 3333 by default
 let clientIP = "127.0.0.1"; // Valor predeterminado
