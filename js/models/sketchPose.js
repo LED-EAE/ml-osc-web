@@ -7,9 +7,6 @@ let model, webcam, ctx, labelContainer, maxPredictions;
 
 let label = "";
 
-// we need a handle to the socket to send our osc values
-var socket;
-var isConnected;
 // Setup a confidence Threshod so that not all the messages are sent via OSC
 var resultConfidence;
 var confidenceThreshold = 0.80;
