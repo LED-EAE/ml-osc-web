@@ -1,3 +1,8 @@
+// we need a handle to the socket to send our osc values
+let socket;
+let isConnected;
+
+// Global variables to handle OSC received values (only for receiveOsc function)
 var x=0;
 var y=0;
 
