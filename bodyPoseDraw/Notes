@@ -1,0 +1,6 @@
+IMPORTANTE PARA PROBAR EN OTROS EXPLORADORES
+
+Habilitar WebGPU en Chrome:
+Abre Chrome y navega a chrome://flags.
+Busca la opción WebGPU.
+Habilítala y reinicia el navegador.
