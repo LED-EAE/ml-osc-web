@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Dibujo de texturas con BodyPose</title>
+
 		<!-- keep the line below for OpenProcessing compatibility -->
 	<script src="https://openprocessing.org/openprocessing_sketch.js"></script>
 
@@ -10,13 +11,71 @@
 	<!-- ml5 -->
 	<script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
 
-	<script src="https://p5play.org/v3/planck.min.js"></script>
-	<script src="https://p5play.org/v3/p5play.js"></script>
 	<script src="mySketch.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>   
+    <!-- Contenedor para el dropdown y los cargadores de imágenes -->
+    <div id="image-selectors" class="horizontal-container">
+        <div class="dropdown-container">
+            <label for="image-dropdown">Seleccionar Imagen:</label>
+            <select id="image-dropdown">
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option value="image1">Imagen 1</option>
+                <option value="image2">Imagen 2</option>
+                <option value="image3">Imagen 3</option>
+            </select>
+        </div>
+
+        <!-- Cargadores de imágenes (ocultos por defecto) -->
+        <div id="image1-container" class="image-container" style="display: none;">
+            <label for="image1">Cargar Imagen 1:</label>
+            <input type="file" id="image1" accept="image/*">
+        </div>
+        <div id="image2-container" class="image-container" style="display: none;">
+            <label for="image2">Cargar Imagen 2:</label>
+            <input type="file" id="image2" accept="image/*">
+        </div>
+        <div id="image3-container" class="image-container" style="display: none;">
+            <label for="image3">Cargar Imagen 3:</label>
+            <input type="file" id="image3" accept="image/*">
+        </div>
+
+	<!-- Campo para definir confidenceThreshold -->
+		<div class="confidence-container">
+			<label for="confidence-threshold">Temperatura:</label>
+			<input type="number" id="confidence-threshold" step="0.01" min="0" max="1" value="0.1">
+		</div>
+	</div>
+	
+    <!-- Contenedor para el canvas -->
+    <div id="sketch-container"></div>
+    
+    <script>
+        // Mostrar el cargador de imágenes correspondiente según la selección del dropdown
+        document.getElementById('image-dropdown').addEventListener('change', function () {
+            // Ocultar todos los contenedores de cargadores
+            document.querySelectorAll('.image-container').forEach(container => {
+                container.style.display = 'none';
+            });
+
+            // Mostrar el contenedor correspondiente
+            const selectedValue = this.value;
+            if (selectedValue) {
+                document.getElementById(`${selectedValue}-container`).style.display = 'inline-block';
+            }
+        });
+
+		// Actualizar la variable confidenceThreshold dinámicamente
+        document.getElementById('confidence-threshold').addEventListener('input', function () {
+            const value = parseFloat(this.value);
+            if (!isNaN(value) && value >= 0 && value <= 1) {
+                confidenceThreshold = value;
+                console.log(`confidenceThreshold actualizado a: ${confidenceThreshold}`);
+            }
+        });
+    </script>
 
 </body>
 

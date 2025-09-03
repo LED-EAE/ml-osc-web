@@ -1,5 +1,6 @@
 // TODO Load image
 let img;
+let img1, img2, img3;
 
 // Canva/Webcam size
 let xMax = 1*640;
@@ -19,6 +20,7 @@ let options = {
   flipped: true
 }
 
+let confidenceThreshold = 0.1; // minimum confidence to consider a detection valid
 
 // video and pose variables used during detection
 let video;
@@ -59,6 +61,9 @@ function setup() {
 	// Create the webcam video and hide it
   video = createCapture(VIDEO);
 	
+    // Configurar los seleccionadores de imágenes
+    setupImageSelectors();
+
 	// Fixed Size
   //video.size(xMax, yMax);
 	// window Full Size
@@ -75,7 +80,7 @@ function draw() {
 	getRightHand();
 	// Draw brush according to right hand detection
 	//drawBrush();
-  drawBrushTexture();
+  drawBrushTextureMap();
 }
 
 // Brush-like drawing function (with texture from loaded image)
@@ -100,7 +105,6 @@ function drawBrushTexture(){
       x = wx;
       y = wy;
     }
-		
     // Calculate velocity
     /*
       MEMO : Use Hooke's law to make spring motion
@@ -133,6 +137,74 @@ function drawBrushTexture(){
       line( x, y, oldX, oldY );
       strokeWeight( oldR );  // ADD
       stroke(img.get(x+diff*1.5, y+diff*2)); // Fill with the color of the image at the offset position
+      line( x+diff*1.5, y+diff*2, oldX+diff*2, oldY+diff*2 );  // ADD
+      line( x-diff, y-diff, oldX-diff, oldY-diff );  // ADD
+    }
+
+  }
+	// If no right hand is detected, do not draw
+	else if(f) {
+    // Reset state
+    vx = vy = 0;
+    f = false;
+  }
+}
+
+// Brush-like drawing function (with texture from loaded image)
+// and re-mapping brush color from image size
+function drawBrushTextureMap(){	
+	// If right hand is detected, start drawing
+	if(detectedRightHand != null) {
+	// initialize wrist coordinates
+	wx = detectedRightHand.x;
+	wy = detectedRightHand.y;
+	/*
+    Smoother movement than using mouse coordinates
+  */
+  /*
+    Parameters used
+      size : Brush size
+      spring : Spring constant(Larger value means stronger spring)
+      friction : Friction(Smaller value means, the more slippery)
+  */
+    if(!f) {
+      // Initialize coordinates
+      f = true;
+      x = wx;
+      y = wy;
+    }
+    // Calculate velocity
+    /*
+      MEMO : Use Hooke's law to make spring motion
+        DistanceX = (X1 - X0)
+        SpringConstant = (value between 0 and 1)
+        AccelerationX = DistanceX * SpringConstant
+        VelocityX = ( VelocityX + AccelerationX ) * Friction
+    */
+    vx += ( wx - x ) * spring;
+    vy += ( wy - y ) * spring;
+    vx *= friction;
+    vy *= friction;
+
+    v += sqrt( vx*vx + vy*vy ) - v;
+    v *= 0.6;
+
+    oldR = r;
+    r = brushSize - v;
+		
+    // Draw at the calculated coordinates
+    for( let i = 0; i < splitNum; ++i ) {
+      oldX = x;
+      oldY = y;
+      x += vx / splitNum;
+      y += vy / splitNum;
+      oldR += ( r - oldR ) / splitNum;
+      if(oldR < 1) { oldR = 1; }
+      strokeWeight( oldR+diff );  // AMEND: oldR -> oldR+diff
+      stroke(img.get(map(x, 0, windowWidth, 0, img.width), map(y, 0, windowHeight, 0, img.height))); // Fill with the color of the image at the current position
+      line( x, y, oldX, oldY );
+      strokeWeight( oldR );  // ADD
+      stroke(img.get(map(x+diff*1.5, 0, windowWidth, 0, img.width), map(y+diff*2, 0, windowHeight, 0, img.height)));
       line( x+diff*1.5, y+diff*2, oldX+diff*2, oldY+diff*2 );  // ADD
       line( x-diff, y-diff, oldX-diff, oldY-diff );  // ADD
     }
@@ -231,7 +303,7 @@ function getRightHand() {
     let rightHand = pose.right_wrist;
 		//console.log(pose);
     //console.log(rightHand);
-    if (rightHand.confidence > 0.1) {
+    if (rightHand.confidence > confidenceThreshold) {
       detectedRightHand = rightHand;
     }
     else {
@@ -241,10 +313,80 @@ function getRightHand() {
 }
 
 function keyPressed() {
-  background('#FFFFFF');
-	// Draw the image again.
+  //resizeCanvas(windowWidth, windowHeight);
+  if (key === '1' && img1) {
+    background('#FFFFFF');
+    img = img1; // Cambiar a la imagen 1
+    console.log("Imagen cambiada a la Imagen 1.");
+} else if (key === '2' && img2) {
+    background('#FFFFFF');
+    img = img2; // Cambiar a la imagen 2
+    console.log("Imagen cambiada a la Imagen 2.");
+} else if (key === '3' && img3) {
+    background('#FFFFFF');
+    img = img3; // Cambiar a la imagen 3
+    console.log("Imagen cambiada a la Imagen 3.");
+}
+  // Draw the image again.
   //image(img, 0, 0);
 }
+
+
+// Función para manejar la carga de imágenes
+function setupImageSelectors() {
+  const image1Input = document.getElementById('image1');
+  const image2Input = document.getElementById('image2');
+  const image3Input = document.getElementById('image3');
+
+  // Cargar la imagen 1
+  image1Input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              img1 = loadImage(e.target.result, () => {
+                  console.log("Imagen 1 cargada correctamente.");
+              });
+          };
+          reader.readAsDataURL(file);
+      } else {
+          alert("Por favor, selecciona un archivo de imagen válido.");
+      }
+  });
+
+  // Cargar la imagen 2
+  image2Input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              img2 = loadImage(e.target.result, () => {
+                  console.log("Imagen 2 cargada correctamente.");
+              });
+          };
+          reader.readAsDataURL(file);
+      } else {
+          alert("Por favor, selecciona un archivo de imagen válido.");
+      }
+  });
+
+  // Cargar la imagen 3
+  image3Input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              img3 = loadImage(e.target.result, () => {
+                  console.log("Imagen 3 cargada correctamente.");
+              });
+          };
+          reader.readAsDataURL(file);
+      } else {
+          alert("Por favor, selecciona un archivo de imagen válido.");
+      }
+  });
+}
+
 
 // pose results example
 /*

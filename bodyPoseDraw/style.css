@@ -1,5 +1,59 @@
-html,
-body {
-	margin: 0;
-	padding: 0;
+/* Alinear el dropdown, los botones de carga y el campo de confianza horizontalmente */
+.horizontal-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px; /* Espaciado entre elementos */
+    padding: 10px;
+    background-color: #f4f4f4; /* Fondo claro para destacar */
+    border-bottom: 1px solid #ccc; /* Línea divisoria */
+}
+
+/* Estilo para el dropdown */
+.dropdown-container select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Estilo para los botones de carga */
+.image-container {
+    display: inline-block;
+}
+
+.image-container label {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.image-container input[type="file"] {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Estilo para el campo de confianza */
+.confidence-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.confidence-container label {
+    font-size: 14px;
+}
+
+.confidence-container input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
 }
