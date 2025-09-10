@@ -313,22 +313,23 @@ function getRightHand() {
 }
 
 function keyPressed() {
-  //resizeCanvas(windowWidth, windowHeight);
-  if (key === '1' && img1) {
-    background('#FFFFFF');
-    img = img1; // Cambiar a la imagen 1
-    console.log("Imagen cambiada a la Imagen 1.");
-} else if (key === '2' && img2) {
-    background('#FFFFFF');
-    img = img2; // Cambiar a la imagen 2
-    console.log("Imagen cambiada a la Imagen 2.");
-} else if (key === '3' && img3) {
-    background('#FFFFFF');
-    img = img3; // Cambiar a la imagen 3
-    console.log("Imagen cambiada a la Imagen 3.");
-}
-  // Draw the image again.
-  //image(img, 0, 0);
+	  //resizeCanvas(windowWidth, windowHeight);
+	  if (key === '1' && img1) {
+	    background('#FFFFFF');
+	    img = img1; // Cambiar a la imagen 1
+	    console.log("Imagen cambiada a la Imagen 1.");
+	} else if (key === '2' && img2) {
+	    background('#FFFFFF');
+	    img = img2; // Cambiar a la imagen 2
+	    console.log("Imagen cambiada a la Imagen 2.");
+	} else if (key === '3' && img3) {
+	    background('#FFFFFF');
+	    img = img3; // Cambiar a la imagen 3
+	    console.log("Imagen cambiada a la Imagen 3.");
+	} else if (keyCode === BACKSPACE) { // Reiniciar el canva con la tecla Backspace
+	    background('#FFFFFF');
+	    console.log("Reinicializando canva.");
+	}
 }
 
 
